@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Livros Emprestados</title>
+</head>
+<body>
+
+    <h1>Lista de Livros Emprestados</h1>
+
+    <a href="{{url_for('borrowed.register')}}">Adicionar</a>
+    <hr>
+
+    <!-- 
+    {% for b_book in borrowed_books %}
+        {% for book in books %}
+            {% if book.id == b_book.bor_bk_id %}
+                <p>Título do Livro: {{ book.titulo }}</p>
+                <p>ID do Usuário: {{ b_book.bor_user_id }}</p>
+                <p>Data do Empréstimo: {{ b_book.bor_data_emprestimo }}</p>
+                <hr>
+            {% endif %}
+        {% endfor %}
+    {% endfor %}-->
+    
+
+    
+    {% for b_book in borrowed_books %}
+        {% for book in books %}
+            {% for user in users %}
+                {% if book.id == b_book.bor_bk_id and b_book.bor_user_id == user.id %}
+                    <p>Título do Livro: {{ book.titulo }}</p>
+                    <p>ID do Usuário: {{ b_book.bor_user_id }}</p>
+                    <p>Data do Empréstimo: {{ b_book.bor_data_emprestimo }}</p>
+                    <p>Nome do Usuário: {{ user.nome }}</p>
+                    <p>E-mail do Usuário: {{ user.email }}</p>
+                    <hr>
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+    {% endfor %}
+    
+</body>
+</html>

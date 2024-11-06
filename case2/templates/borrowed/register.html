@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Borrowed Books - Register</title>
+</head>
+<body>
+
+    <h1>Registrar Empréstimo de Livro</h1>
+
+    <div>
+        <h2>Dados</h2>
+        <form action="{{url_for('borrowed.register')}}" method="post">
+            <!-- <input type="text" name="titulo" placeholder="Título" value="{{request.form['titulo']}}"> -->
+
+            <select name="book_id">
+                {% for book in books %}
+                    <option value="{{book.id}}">{{book.titulo}}</option>    
+                {% endfor %}                
+            </select>
+
+            <select name="user_id">
+                {% for user in users %}
+                    <option value="{{user.id}}">{{user.nome}}</option>    
+                {% endfor %}                
+            </select>
+
+            <label for="data_emprestimo">Data de Empréstimo</label>
+            <input type="datetime-local" name="data_emprestimo" required><br>
+
+            <button>Enviar</button>
+        </form>
+    </div>
+
+
+    
+</body>
+</html>
