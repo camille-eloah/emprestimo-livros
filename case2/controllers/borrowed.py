@@ -11,7 +11,7 @@ def index():
 
 @bp.route('/register', methods=['POST', 'GET'])
 def register():
-    
+
     if request.method == 'POST':
         book_id = request.form['book_id']
         user_id = request.form['user_id']
@@ -23,3 +23,14 @@ def register():
 
 
     return render_template('borrowed/register.html', users=User.all(), books=Book.all(), borrowed_books=Borrow.all())
+
+@bp.route('/delete/<int:borrow_id>', methods=['POST', 'GET'])
+def delete(borrow_id): 
+    borrowed_book = Borrow.get_by_id(borrow_id)
+
+    if borrowed_book:
+        borrowed_book.delete()
+        return redirect(url_for('borrowed.index'))
+    
+    else:
+        return redirect(url_for('borrowed.index', mensagem="Empréstimo não encontrado"))

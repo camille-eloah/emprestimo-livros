@@ -35,6 +35,11 @@
                     <p>Data do Empréstimo: {{ b_book.bor_data_emprestimo }}</p>
                     <p>Nome do Usuário: {{ user.nome }}</p>
                     <p>E-mail do Usuário: {{ user.email }}</p>
+
+                    <form action="{{ url_for('borrowed.delete', borrow_id=b_book.bor_id) }}" method="post">
+                        <button type="submit" onclick="return confirm('Você tem certeza que deseja remover?')";>Deletar</button>
+                    </form>
+
                     <hr>
                 {% endif %}
             {% endfor %}

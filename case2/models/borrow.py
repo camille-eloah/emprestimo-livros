@@ -1,11 +1,11 @@
 from database import get_connection
 
 class Borrow:
-    def __init__(self, bor_bk_id, bor_user_id, bor_data_emprestimo):
+    def __init__(self, bor_bk_id, bor_user_id, bor_data_emprestimo, bor_id=None):
         self.bor_bk_id = bor_bk_id
         self.bor_user_id = bor_user_id
         self.bor_data_emprestimo = bor_data_emprestimo
-
+        self.bor_id = bor_id 
 
     def save(self):
         conn = get_connection()
@@ -19,3 +19,22 @@ class Borrow:
         conn = get_connection()
         borrowed_books = conn.execute("SELECT * FROM borrowed_books").fetchall()
         return borrowed_books
+    
+    @classmethod 
+    def get_by_id(cls, bor_id): 
+        conn = get_connection()
+        result = conn.execute("SELECT * FROM borrowed_books WHERE bor_id = ?", (bor_id,)).fetchone()
+        conn.close()
+        if result:
+            return cls(result['bor_bk_id'], result['bor_user_id'], result['bor_data_emprestimo'], result['bor_id'])
+        return None 
+    
+    def delete(self):
+        if self.bor_id is None: 
+            raise ValueError("Não foi possível encontrar o ID do empréstimo.")
+        
+        conn = get_connection()
+        conn.execute("DELETE FROM borrowed_books WHERE bor_id = ?", (self.bor_id,))
+        conn.commit()
+        conn.close()
+        return True
