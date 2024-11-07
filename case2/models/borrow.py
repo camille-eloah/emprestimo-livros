@@ -38,3 +38,15 @@ class Borrow:
         conn.commit()
         conn.close()
         return True
+    
+    def update(self, new_bk_id, new_user_id, new_data_emprestimo):
+        conn = get_connection()
+        conn.execute("""
+            UPDATE borrowed_books
+            SET bor_bk_id = ?, bor_user_id = ?, bor_data_emprestimo = ?
+                     WHERE bor_id = ? 
+                     """, (new_bk_id, new_user_id, new_data_emprestimo, self.bor_id))
+        conn.commit()
+        conn.close()
+        return True 
+        

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Empréstimo</title>
+</head>
+<body>
+
+    <h1>Editar Empréstimo</h1>
+    
+    <form method="POST">
+        <label for="book_id">Livro:</label>
+        <select name="book_id" id="book_id">
+            {% for book in books %}
+                <option value="{{ book.id }}" {% if book.id == borrowed_book.bor_bk_id %}selected{% endif %}>{{ book.titulo }}</option>
+            {% endfor %}
+        </select>
+        
+        <label for="user_id">Usuário:</label>
+        <select name="user_id" id="user_id">
+            {% for user in users %}
+                <option value="{{ user.id }}" {% if user.id == borrowed_book.bor_user_id %}selected{% endif %}>{{ user.nome }}</option>
+            {% endfor %}
+        </select>
+        
+        <label for="data_emprestimo">Data do Empréstimo:</label>
+        <input type="datetime-local" name="data_emprestimo" id="data_emprestimo" value="{{ borrowed_book.bor_data_emprestimo }}" required>
+
+        <button type="submit">Salvar Alterações</button>
+    </form>
+
+    <a href="{{ url_for('borrowed.index') }}">Cancelar</a>
+
+</body>
+</html>

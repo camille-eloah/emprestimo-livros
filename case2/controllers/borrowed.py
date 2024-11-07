@@ -34,3 +34,19 @@ def delete(borrow_id):
     
     else:
         return redirect(url_for('borrowed.index', mensagem="Empréstimo não encontrado"))
+    
+@bp.route('/edit/<int:borrow_id>', methods=['GET', 'POST'])
+def edit(borrow_id):
+    borrowed_book = Borrow.get_by_id(borrow_id)
+    if not borrowed_book:
+        return redirect(url_for('borrowed.index', mensagem="Empréstimo não encontrado"))
+    
+    if request.method == 'POST':
+        new_bk_id = request.form['book_id']
+        new_user_id = request.form['user_id']
+        new_data_emprestimo = request.form['data_emprestimo']
+
+        borrowed_book.update(new_bk_id, new_user_id, new_data_emprestimo)
+        return redirect(url_for('borrowed.index'))
+    
+    return render_template('borrowed/edit.html', borrowed_book=borrowed_book, users=User.all(), books=Book.all())
