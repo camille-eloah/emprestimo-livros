@@ -7,6 +7,12 @@
 </head>
 <body>
     <h1>Bem-vindo ao Sistema de Empréstimo de Livros!</h1>
+    {% if current_user.is_authenticated %}
+        <p>Olá, {{ current_user.nome }}! <a href="{{ url_for('auth.logout') }}">Logout</a></p>
+    {% else %}
+        <p><a href="{{ url_for('auth.login') }}">Login</a></p>
+    {% endif %}
+
     <p>Escolha uma das opções abaixo:</p>
     <ul>
         <li><a href="{{ url_for('borrowed.index') }}">Livros Emprestados</a></li>

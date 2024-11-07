@@ -11,7 +11,6 @@ def index():
 
 @bp.route('/register', methods=['POST', 'GET'])
 def register():
-    
     if request.method == 'POST':
         titulo = request.form['titulo']
         user = request.form['user']
@@ -19,7 +18,6 @@ def register():
         book = Book(titulo, user)
         book.save()
         return redirect(url_for('books.index'))
-
 
     return render_template('books/register.html', users=User.all())
 

@@ -1,6 +1,7 @@
 from flask import render_template, Blueprint, url_for, request, flash, redirect
 from models.user import User
 from database import get_connection
+from werkzeug.security import generate_password_hash
 
 # módulo de usuários
 bp = Blueprint('users', __name__, url_prefix='/users')
@@ -14,11 +15,13 @@ def register():
     if request.method == 'POST':
         email = request.form['email']
         nome = request.form['nome']
+        senha = request.form['senha']
 
         if not email:
             flash('Email é obrigatório')
         else:
-            user = User(nome, email)
+            hashed_senha = generate_password_hash(senha)
+            user = User(nome, email, hashed_senha)
             user.save()
             return redirect(url_for('users.index'))
     
@@ -26,7 +29,7 @@ def register():
 
 @bp.route('/delete/<int:user_id>', methods=['POST', 'GET'])
 def delete(user_id): 
-    user = User.get_by_id(user_id)
+    user = User.find(user_id)
     print(user)
 
     if user:

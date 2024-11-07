@@ -6,6 +6,13 @@
 </head>
 <body>
     <h2>Login</h2>
+
+    {% if message %}
+    <script>
+        confirm("{{ message }}");
+    </script>
+    {% endif %}
+
     <form method="POST" action="{{ url_for('auth.login') }}">
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" required>
