@@ -8,16 +8,21 @@
 <body>
 
     <h1>Lista de Usuários</h1>
-    
+
     {% if mensagem %}
-    <div style="color: red;">{{ mensagem }}</div>
+        <div style="color: red;">{{ mensagem }}</div>
     {% endif %}
 
     <a href="{{url_for('users.register')}}">Adicionar</a>
 
     <hr>
     {% for user in users %}
-    <p>{{user.nome}}</p>
+        <p>{{user.nome}}</p>
+
+        <!-- Deletar -->
+        <form action="{{ url_for('users.delete', user_id=user.id) }}" method="post">
+            <button type="submit" onclick="return confirm('Você tem certeza que deseja remover?')";>Deletar</button>
+        </form>
     {% endfor %}
     
 </body>

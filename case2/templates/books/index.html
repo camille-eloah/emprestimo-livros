@@ -10,26 +10,25 @@
     <h1>Lista de Livros</h1>
 
     {% if mensagem %}
-    <div style="color: red;">{{ mensagem }}</div>
+        <div style="color: red;">{{ mensagem }}</div>
     {% endif %}
 
     <a href="{{url_for('books.register')}}">Adicionar</a>
     <hr>
+    
     {% for book in books %}
+        <!-- Listar -->
+        <p>{{book.titulo}}</p>
 
-    <!-- Listar -->
-    <p>{{book.titulo}}</p>
+        <!-- Deletar -->
+        <form action="{{ url_for('books.delete', book_id=book.id) }}" method="post">
+            <button type="submit" onclick="return confirm('Você tem certeza que deseja remover esse livro?')";>Deletar</button>
+        </form>
 
-    <!-- Deletar -->
-    <form action="{{ url_for('books.delete', book_id=book.id) }}" method="post">
-        <button type="submit" onclick="return confirm('Você tem certeza que deseja remover esse livro?')";>Deletar</button>
-    </form>
-
-    <!-- Editar -->
-    <a href="{{ url_for('books.edit', book_id=book.id) }}">
-        <button type="button">Editar</button>
-    </a>
-        
+        <!-- Editar -->
+        <a href="{{ url_for('books.edit', book_id=book.id) }}">
+            <button type="button">Editar</button>
+        </a>    
     {% endfor %}
 
 
