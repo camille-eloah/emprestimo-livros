@@ -22,3 +22,35 @@ def register():
 
 
     return render_template('books/register.html', users=User.all())
+
+@bp.route('/delete/<int:book_id>', methods=['POST', 'GET'])
+def delete(book_id): 
+    book = Book.get_by_id(book_id)
+
+    if book:
+        borrowed_books = Borrow.get_by_book_id(book_id)
+        
+        if borrowed_books:
+            for borrowed_book in borrowed_books:
+                borrowed_book.delete()
+
+        book.delete()
+        return redirect(url_for('books.index'))
+    
+    else:
+        return redirect(url_for('books.index', mensagem="Livro não encontrado"))
+    
+@bp.route('/edit/<int:book_id>', methods=['GET', 'POST'])
+def edit(book_id):
+    book = Book.get_by_id(book_id)
+    if not book:
+        return redirect(url_for('books.index', mensagem="Empréstimo não encontrado"))
+    
+    if request.method == 'POST':
+        new_titulo = request.form['titulo']
+        new_user_id = request.form['user_id']
+
+        book.update(new_titulo, new_user_id)
+        return redirect(url_for('books.index'))
+    
+    return render_template('books/edit.html', book=book, users=User.all(), books=Book.all())

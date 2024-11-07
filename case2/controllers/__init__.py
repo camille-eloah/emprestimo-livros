@@ -2,5 +2,6 @@
 all = [
     'books',
     'users',
-    'borrowed'
+    'borrowed',
+    'home'
 ]

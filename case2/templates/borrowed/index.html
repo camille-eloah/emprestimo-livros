@@ -24,7 +24,9 @@
         {% endfor %}
     {% endfor %}-->
     
-
+    {% if mensagem %}
+        <div style="color: red;">{{ mensagem }}</div>
+    {% endif %}
     
     {% for b_book in borrowed_books %}
         {% for book in books %}

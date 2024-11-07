@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Livro</title>
+</head>
+<body>
+    <h1>Editar Livro</h1>
+
+    <form method="POST">
+        <label for="titulo">Título do Livro:</label>
+        <input type="text" id="titulo" name="titulo" value="{{ book.titulo }}" required>
+
+        <label for="user_id">Usuário Responsável:</label>
+        <select name="user_id" id="user_id">
+            {% for user in users %}
+                <option value="{{ user.id }}" {% if user.id == book.user_id %}selected{% endif %}>{{ user.nome }}</option>
+            {% endfor %}
+        </select>
+
+        <button type="submit">Salvar Alterações</button>
+    </form>
+
+    <a href="{{ url_for('books.index') }}">Voltar</a>
+
+</body>
+</html>

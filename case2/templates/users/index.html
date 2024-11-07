@@ -8,6 +8,10 @@
 <body>
 
     <h1>Lista de Usuários</h1>
+    
+    {% if mensagem %}
+    <div style="color: red;">{{ mensagem }}</div>
+    {% endif %}
 
     <a href="{{url_for('users.register')}}">Adicionar</a>
 

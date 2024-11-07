@@ -29,6 +29,15 @@ class Borrow:
             return cls(result['bor_bk_id'], result['bor_user_id'], result['bor_data_emprestimo'], result['bor_id'])
         return None 
     
+    @classmethod
+    def get_by_book_id(cls, book_id):
+        conn = get_connection()
+        borrowed_books = conn.execute("SELECT * FROM borrowed_books WHERE bor_bk_id = ?", (book_id,)).fetchall()
+        conn.close()
+
+        for result in borrowed_books:
+            return [cls(result['bor_bk_id'], result['bor_user_id'], result['bor_data_emprestimo'], result['bor_id'])]
+    
     def delete(self):
         if self.bor_id is None: 
             raise ValueError("Não foi possível encontrar o ID do empréstimo.")
